@@ -14,7 +14,6 @@ const testDto: CreateReviewDto = {
 	description: "test description",
 	rating: 3,
 	productId,
-	typegooseName: ''
 }
 
 describe('AppController (e2e)', () => {

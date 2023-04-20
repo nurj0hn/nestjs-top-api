@@ -1,9 +1,9 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserModel } from './user.model';
-import { ModelType, DocumentType } from '@typegoose/typegoose/lib/types';
+import { ModelType } from '@typegoose/typegoose/lib/types';
 import { InjectModel } from 'nestjs-typegoose';
 import { AuthDto } from './dto/auth.dto';
-import { genSalt, hash, compareSync, compare } from "bcryptjs";
+import { genSalt, hash, compare } from "bcryptjs";
 import { JwtService } from '@nestjs/jwt';
 
 @Injectable()

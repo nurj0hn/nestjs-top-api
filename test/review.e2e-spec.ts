@@ -20,7 +20,6 @@ const testDto: CreateReviewDto = {
 describe('AppController (e2e)', () => {
 	let app: INestApplication;
 	let createdId;
-	let prod;
 
 	beforeEach(async () => {
 		const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -38,10 +37,23 @@ describe('AppController (e2e)', () => {
 			.expect(201)
 			.then(({ body }: request.Response) => {
 				createdId = body._id;
+				console.log(body)
 				expect(createdId).toBeDefined();
 				done();
 			});
 	});
+
+	it('/review/create (POST) -- fail', async (done) => {
+		return request(app.getHttpServer())
+			.post('/review/create')
+			.send({ ...testDto, rating: 0 })
+			.expect(400)
+			.then(({ body }: request.Response) => {
+				console.log(body)
+				done();
+			});
+	});
+
 
 	it('/review/byProduct/:productId (GET)', async (done) => {
 		return request(app.getHttpServer())

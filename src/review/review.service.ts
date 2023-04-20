@@ -9,8 +9,17 @@ import { InjectModel } from 'nestjs-typegoose';
 export class ReviewService {
     constructor(@InjectModel(ReviewModel) private readonly reviewModel: ModelType<ReviewModel>) { }
 
-    async create(dto: CreateReviewDto): Promise<DocumentType<ReviewModel>> {
-        return this.reviewModel.create(dto);
+    async create(dto: CreateReviewDto) { // : Promise<DocumentType<ReviewModel>>
+        const review = new this.reviewModel({
+            name: dto.name,
+            title: dto.title,
+            description: dto.description,
+            rating: dto.rating,
+            productId: dto.productId
+
+        });
+        // return this.reviewModel.create(dto);
+        return review.save();
     }
 
     async delete(id: string): Promise<DocumentType<ReviewModel> | null> {
@@ -18,7 +27,7 @@ export class ReviewService {
     }
 
     async findByProductId(productId: string): Promise<DocumentType<ReviewModel>[]> {
-        return this.reviewModel.find({ productId: Types.ObjectId(productId) }).exec();
+        return this.reviewModel.find({ productId: productId }).exec();
     }
 
     async deleteByProductId(productId: string): Promise<DocumentType<ReviewModel>[] | null> {

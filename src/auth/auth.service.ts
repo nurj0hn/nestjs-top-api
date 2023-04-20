@@ -31,11 +31,11 @@ export class AuthService {
     async validateUser(email: string, password: string) {
         const user = await this.finduser(email);
         if (!user) {
-            throw new UnauthorizedException("ganothtoriziesd");
+            throw new UnauthorizedException(USER_NOT_FOUND);
         }
         const isCorrectPassword = await compare(password, user.passwordHash);
         if (!isCorrectPassword) {
-            throw new UnauthorizedException("gavno parrol");
+            throw new UnauthorizedException(INVALID_PASSWORD);
         }
         return { email: user.email };
     }

@@ -4,5 +4,5 @@ export class CreateReviewDto {
     description: string;
     rating: number;
     productId: string;
-    typegooseName: string; // add this property
+    typegooseName: string | null; // add this property
 }

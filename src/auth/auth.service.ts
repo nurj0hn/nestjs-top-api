@@ -24,8 +24,7 @@ export class AuthService {
     }
 
     async finduser(email: string) {
-        console.log(this.userModel.findOne({ email: email }).exec())
-        return this.userModel.findOne({ email: email }).exec();
+        return this.userModel.findOne({ email }).exec();
     }
 
     async validateUser(email: string, password: string) {

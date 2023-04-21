@@ -33,4 +33,17 @@ export class ReviewService {
     async deleteByProductId(productId: string): Promise<DocumentType<ReviewModel>[] | null> {
         return this.reviewModel.deleteMany({ productId: Types.ObjectId(productId) }).exec();
     }
+
+    async getAll() {
+        return this.reviewModel.aggregate([{
+            $lookup: {
+                from: "Product",
+                localField: "productId",
+                foreignField: "_id",
+                as: "product"
+            },
+        },
+    
+    ]).exec();
+    }
 }

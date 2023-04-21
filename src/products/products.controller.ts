@@ -1,33 +1,51 @@
-import { Body, Controller, Delete, Param, Post, Get, Patch, HttpCode } from '@nestjs/common';
+import { Body, Controller, Delete, Param, Post, Get, Patch, HttpCode, UnauthorizedException, NotFoundException, UsePipes, ValidationPipe } from '@nestjs/common';
 import { ProductsModel } from './products.model';
 import { FindProductDto } from './dto/find-products.dto';
+import { CreateProductDto } from './dto/create-product.dto';
+import { ProductsService } from './products.service';
 
 @Controller('products')
 export class ProductsController {
-	@Post('create')
-	async create(@Body() dto: Omit<ProductsModel, '_id'>) {
 
+	constructor(private readonly productService: ProductsService) { };
+
+	@Post('create')
+	async create(@Body() dto: CreateProductDto) {
+		return this.productService.create(dto);
 	}
 
 	@Get(':id')
 	async get(@Param('id') id: string) {
-
+		const product = this.productService.findById(id);
+		if (!product) {
+			throw new NotFoundException();
+		}
+		return product;
 	}
 
 	@Delete(':id')
 	async delete(@Param('id') id: string) {
-
+		const deletedProduct = this.productService.deleteById(id);
+		if (!deletedProduct) {
+			throw new NotFoundException();
+		}
+		return deletedProduct;
 	}
 
 	@Patch(':id')
-	async patch(@Param('id') id: string, @Body() dto: ProductsModel) {
-
+	async patch(@Param('id') id: string, @Body() dto: CreateProductDto) {
+		const updatedProduct = this.productService.updateById(id, dto);
+		if (!updatedProduct) {
+			throw new NotFoundException();
+		}
+		return updatedProduct;
 	}
 
 	@HttpCode(200)
-	@Post()
+	@UsePipes(new ValidationPipe())
+	@Post("find")
 	async find(@Body() dto: FindProductDto) {
-
+		return this.productService.findWithReviews(dto);
 	}
 
 }

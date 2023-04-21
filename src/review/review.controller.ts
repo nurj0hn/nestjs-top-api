@@ -43,4 +43,9 @@ export class ReviewController {
 		console.log(email)
 		return this.reviewService.findByProductId(productId);
 	}
+
+	@Get('all')
+	async getAll() {
+		return this.reviewService.getAll();
+	}
 }

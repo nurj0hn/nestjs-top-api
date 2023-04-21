@@ -9,9 +9,9 @@ import { ReviewModel } from 'src/review/review.model';
 @Injectable()
 export class ProductsService {
 
-    constructor(@InjectModel(ProductsModel) private readonly productModel: ModelType<ProductsModel>) {
-
-    };
+    constructor(
+        @InjectModel(ProductsModel) private readonly productModel: ModelType<ProductsModel>
+    ) { };
 
 
     async create(dto: CreateProductDto) {
@@ -73,7 +73,11 @@ export class ProductsService {
                     reviewAvg: { $avg: "$reviews.rating" }
                 }
             }
-        ]).exec() as (ProductsModel & { review: ReviewModel[], reviewCount: number, reviewAvg: number })[];
+        ]).exec() as (ProductsModel & {
+            review: ReviewModel[],
+            reviewCount: number,
+            reviewAvg: number
+        })[];
     }
 
 }

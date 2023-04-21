@@ -1,5 +1,16 @@
-import { Body, Controller, Delete, Param, Post, Get, Patch, HttpCode, UnauthorizedException, NotFoundException, UsePipes, ValidationPipe } from '@nestjs/common';
-import { ProductsModel } from './products.model';
+import {
+	Body,
+	Controller,
+	Delete,
+	Param,
+	Post,
+	Get,
+	Patch,
+	HttpCode,
+	NotFoundException,
+	UsePipes,
+	ValidationPipe
+} from '@nestjs/common';
 import { FindProductDto } from './dto/find-products.dto';
 import { CreateProductDto } from './dto/create-product.dto';
 import { ProductsService } from './products.service';

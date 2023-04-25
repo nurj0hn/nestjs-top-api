@@ -22,7 +22,6 @@ export class ProductsService {
             oldPrice: dto.oldPrice,
             credit: dto.credit,
             description: dto.description,
-            rating: dto.rating,
             advantages: dto.advantages,
             disAdvantages: dto.disAdvantages,
             categories: dto.categories,
@@ -45,7 +44,7 @@ export class ProductsService {
     }
 
     async findWithReviews(dto: FindProductDto) {
-        return this.productModel.aggregate([
+        return await this.productModel.aggregate([
             {
                 $match: {
                     categories: dto.category
@@ -80,7 +79,8 @@ export class ProductsService {
                             args: ["$reviews"],
                             lang: "js"
                         }
-                     }
+                     },
+                    gavno: "$_id"
                 }
             }
         ]).exec() as (ProductsModel & {

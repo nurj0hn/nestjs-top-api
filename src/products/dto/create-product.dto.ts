@@ -19,20 +19,17 @@ export class CreateProductDto {
     title: string;
 
     @IsNumber()
-    price: string;
+    price: number;
 
     @IsOptional()
     @IsNumber()
-    oldPrice: string;
+    oldPrice: number;
 
     @IsNumber()
-    credit: string;
+    credit: number;
 
     @IsString()
     description: string;
-
-    @IsNumber()
-    rating: string;
 
     @IsString()
     advantages: string;

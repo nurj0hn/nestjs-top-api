@@ -15,7 +15,7 @@ export class AuthController {
 		const oldUser = await this.authService.finduser(dto.login);
 		console.log(oldUser)
 		if (oldUser) {
-			throw new BadRequestException(ALREDY_EXIST);
+			throw new BadRequestException("ALlready");
 		}
 		return this.authService.createuser(dto);
 	}

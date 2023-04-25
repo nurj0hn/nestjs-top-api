@@ -30,11 +30,11 @@ export class AuthService {
     async validateUser(email: string, password: string) {
         const user = await this.finduser(email);
         if (!user) {
-            throw new UnauthorizedException(USER_NOT_FOUND);
+            throw new UnauthorizedException("user with this email not found");
         }
         const isCorrectPassword = await compare(password, user.passwordHash);
         if (!isCorrectPassword) {
-            throw new UnauthorizedException(INVALID_PASSWORD);
+            throw new UnauthorizedException("invalid password");
         }
         return { email: user.email };
     }

@@ -22,9 +22,9 @@ const loginDto: AuthDto = {
 	password: "1"
 }
 
-describe('AppController (e2e)', () => {
+describe('ReviewController (e2e)', () => {
 	let app: INestApplication;
-	let createdId;
+	let createdId: any;
 	let token: string;
 
 	beforeEach(async () => {
@@ -38,7 +38,7 @@ describe('AppController (e2e)', () => {
 		token = body.accessToken;
 	});
 
-	it('/review/create (POST)', async (done) => {
+	it('/review/create (POST) -- success', async (done) => {
 		return request(app.getHttpServer())
 			.post('/review/create')
 			.send(testDto)
@@ -74,7 +74,7 @@ describe('AppController (e2e)', () => {
 			});
 	});
 
-	it('/review/:id (DELETE)', () => {
+	it('/review/:id (DELETE) -- success', () => {
 		return request(app.getHttpServer())
 			.delete('/review/' + createdId)
 			.set("Authorization", "Bearer " + token)

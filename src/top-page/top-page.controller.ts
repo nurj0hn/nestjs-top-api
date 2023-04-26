@@ -35,15 +35,16 @@ export class TopPageController {
 	}
 
 	@HttpCode(200)
-	@Post()
+	@Post("find")
 	async find(@Body() dto: FindTopPageDto) {
-
+		return this.topPageService.findByCategory(dto.firstLevelCategory);
 	}
 
 	@Get("textSearch/:text")
 	async searc(@Param("text") text: string) {
 		return this.topPageService.search(text);
 	}
+
 
 	@Get()
 	async getAll() {

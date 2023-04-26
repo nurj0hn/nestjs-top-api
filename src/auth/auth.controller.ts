@@ -1,6 +1,14 @@
-import { BadRequestException, Body, Controller, HttpCode, Post, UsePipes, ValidationPipe } from '@nestjs/common';
+import {
+	BadRequestException, Body,
+	Controller,
+	HttpCode,
+	Post,
+	UsePipes,
+	ValidationPipe
+} from '@nestjs/common';
 import { AuthDto } from './dto/auth.dto';
 import { AuthService } from './auth.service';
+import { ALREDY_EXIST } from "./auth.contanst";
 
 
 @Controller('auth')
@@ -15,7 +23,7 @@ export class AuthController {
 		const oldUser = await this.authService.finduser(dto.login);
 		console.log(oldUser)
 		if (oldUser) {
-			throw new BadRequestException("ALlready");
+			throw new BadRequestException(ALREDY_EXIST);
 		}
 		return this.authService.createuser(dto);
 	}

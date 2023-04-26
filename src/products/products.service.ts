@@ -43,51 +43,35 @@ export class ProductsService {
         return this.productModel.findByIdAndUpdate(id, dto, { new: true }).exec();
     }
 
-    async findWithReviews(dto: FindProductDto) {
-        return await this.productModel.aggregate([
-            {
-                $match: {
-                    categories: dto.category
-                }
-            },
-            {
-                $sort: {
-                    _id: 1
-                }
-            },
-            {
-                $limit: dto.limit
-            },
-            {
-                $lookup: {
-                    from: "Review",
-                    localField: "_id",
-                    foreignField: "productId",
-                    as: "reviews"
-                }
-            },
-            {
-                $addFields: {
-                    reviewCount: { $size: "$reviews" },
-                    reviewAvg: { $avg: "$reviews.rating" },
-                    reviews: { 
-                        $function: {
-                            body: `function (reviews) {
+    async findWithReviews(category?: string, limit?: number) {
+        return this.productModel
+            .aggregate()
+            .match({ categories: category })
+            .limit(limit)
+            .lookup({
+                from: "Review",
+                localField: "_id",
+                foreignField: "productId",
+                as: "reviews"
+            })
+            .addFields({
+                reviewCount: { $size: "$reviews" },
+                reviewAvg: { $avg: "$reviews.rating" },
+                reviews: {
+                    $function: {
+                        body: `function (reviews) {
                                 reviews.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                                 return reviews;
                             }`,
-                            args: ["$reviews"],
-                            lang: "js"
-                        }
-                     },
-                    gavno: "$_id"
+                        args: ["$reviews"],
+                        lang: "js"
+                    }
                 }
-            }
-        ]).exec() as (ProductsModel & {
-            review: ReviewModel[] | null,
-            reviewCount: number,
-            reviewAvg: number
-        })[];
+            }).exec() as (ProductsModel & {
+                review: ReviewModel[] | null,
+                reviewCount: number,
+                reviewAvg: number
+            })[];
     }
 
 }

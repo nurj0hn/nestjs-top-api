@@ -35,15 +35,6 @@ export class ReviewService {
     }
 
     async getAll() {
-        return this.reviewModel.aggregate([{
-            $lookup: {
-                from: "Product",
-                localField: "productId",
-                foreignField: "_id",
-                as: "product"
-            },
-        },
-    
-    ]).exec();
+        return this.reviewModel.find().exec();
     }
 }

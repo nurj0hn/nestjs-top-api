@@ -10,11 +10,13 @@ export class TopPageController {
 	constructor(private readonly topPageService: TopPageService) { };
 
 	@Post('create')
+	@HttpCode(200)
 	async create(@Body() dto: CreateTopPageDto) {
 		return await this.topPageService.create(dto);
 	}
 
 	@Get(':id')
+	@HttpCode(200)
 	async get(@Param('id', IdValidationPipe) id: string) {
 		return await this.topPageService.findById(id);
 	}
@@ -41,12 +43,14 @@ export class TopPageController {
 	}
 
 	@Get("textSearch/:text")
-	async searc(@Param("text") text: string) {
+	@HttpCode(200)
+	async search(@Param("text") text: string) {
 		return this.topPageService.search(text);
 	}
 
 
 	@Get()
+	@HttpCode(200)
 	async getAll() {
 		return this.topPageService.getAll();
 	}

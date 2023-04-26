@@ -5,6 +5,7 @@ import { InjectModel } from 'nestjs-typegoose';
 import { AuthDto } from './dto/auth.dto';
 import { genSalt, hash, compare } from "bcryptjs";
 import { JwtService } from '@nestjs/jwt';
+import { USER_NOT_FOUND, INVALID_PASSWORD } from "./auth.contanst";
 
 @Injectable()
 export class AuthService {
@@ -30,11 +31,11 @@ export class AuthService {
     async validateUser(email: string, password: string) {
         const user = await this.finduser(email);
         if (!user) {
-            throw new UnauthorizedException("user with this email not found");
+            throw new UnauthorizedException(USER_NOT_FOUND);
         }
         const isCorrectPassword = await compare(password, user.passwordHash);
         if (!isCorrectPassword) {
-            throw new UnauthorizedException("invalid password");
+            throw new UnauthorizedException(INVALID_PASSWORD);
         }
         return { email: user.email };
     }

@@ -11,5 +11,4 @@ export class UserModel extends TimeStamps {
 	@prop()
 	passwordHash: string;
 
-
 }

@@ -1,8 +1,9 @@
-import { Body, Controller, Delete, Get, HttpCode, NotFoundException, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpCode, NotFoundException, Param, Patch, Post, Query } from '@nestjs/common';
 import { FindTopPageDto } from './dto/find-top-page.dto';
 import { TopPageService } from './top-page.service';
 import { CreateTopPageDto } from './dto/create-top-page.dto';
 import { IdValidationPipe } from 'src/pipes/id-validation.pipe';
+import { TopLevelCategory } from './top-page.model';
 
 @Controller('top-page')
 export class TopPageController {
@@ -13,6 +14,12 @@ export class TopPageController {
 	@HttpCode(200)
 	async create(@Body() dto: CreateTopPageDto) {
 		return await this.topPageService.create(dto);
+	}
+
+	@Get("all")
+	@HttpCode(200)
+	async getAll() {
+		return this.topPageService.getAll();
 	}
 
 	@Get(':id')
@@ -49,10 +56,6 @@ export class TopPageController {
 	}
 
 
-	@Get()
-	@HttpCode(200)
-	async getAll() {
-		return this.topPageService.getAll();
-	}
+	
 
 }

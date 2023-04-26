@@ -23,8 +23,6 @@ export class TopPageService {
             tags: dto.tags,
             hh: dto.hh,
             advantages: dto.advantages,
-
-
         })
 
         return topPage.save()

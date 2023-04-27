@@ -3,7 +3,6 @@ import { FindTopPageDto } from './dto/find-top-page.dto';
 import { TopPageService } from './top-page.service';
 import { CreateTopPageDto } from './dto/create-top-page.dto';
 import { IdValidationPipe } from 'src/pipes/id-validation.pipe';
-import { TopLevelCategory } from './top-page.model';
 
 @Controller('top-page')
 export class TopPageController {
@@ -56,6 +55,6 @@ export class TopPageController {
 	}
 
 
-	
+
 
 }

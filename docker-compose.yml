@@ -13,3 +13,16 @@ services:
     volumes:
     - ./mongo-data/:/data/db
     # command: --wiredTigerCacheSize 1.5
+
+  nest:
+    container_name: nest
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000 
+    volumes:
+      - ..:/opt/app/top-api/
+    env_file:
+      - .env
